@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hapur Development | HDPA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg: #f8fafc; --card: #ffffff; --text: #0f172a; --muted: #334155; --primary: #2563eb; --secondary: #fb7185; --accent: #10b981; --accent-2: #6366f1; --border: #e2e8f0; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; font-family: "Georgia", "Times New Roman", serif; background: radial-gradient(1200px 500px at 15% -10%, #ffe4e6, transparent 40%), radial-gradient(900px 400px at 85% 0%, #e0f2fe, transparent 50%), linear-gradient(180deg, #ffffff, #f8fafc 40%, #ffffff); color: var(--text); font-size: 18px; line-height: 1.75; }
+    p { font-size: 18px; line-height: 1.85; }
+    a { color: inherit; text-decoration: none; }
+
+    .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    header { position: sticky; top: 0; z-index: 50; background: rgba(255, 255, 255, 0.85); backdrop-filter: saturate(180%) blur(10px); border-bottom: 1px solid var(--border); }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 72px; position: relative; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 500; letter-spacing: 0.5px; }
+    .brand-logo { height: 32px; display: block; }
+    .brand span { background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+      @media (max-width: 800px) {
+        .brand span { display: none; }
+        .brand img[alt="Head Image"] { height: 32px !important; }
+      }
+
+    .nav-links { display: flex; align-items: center; gap: 20px; }
+    .nav-links a { padding: 10px 12px; border-radius: 10px; color: var(--muted); font-size: 18px; }
+    .nav-links a.active, .nav-links a:hover { color: var(--text); background: #f1f5f9; }
+    .menu-btn { display: none; border: 1px solid var(--border); background: #ffffff; color: var(--text); padding: 8px 10px; border-radius: 8px; }
+
+    @media (max-width: 800px) {
+      .menu-btn { display: inline-flex; }
+      .nav-links { position: absolute; left: 0; right: 0; top: 100%; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px); flex-direction: column; padding: 20px; border: 1px solid var(--border); border-top: none; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-height: 70vh; overflow-y: auto; opacity: 0; transform: translateY(-10px); transition: all 0.3s ease; pointer-events: none; }
+      .nav-links.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+      .nav-links a { padding: 14px 16px; border-radius: 8px; font-size: 16px; }
+    }
+
+    section { padding: 72px 0; border-bottom: 1px solid var(--border); }
+    .section-compact { padding: 24px 0 16px; }
+    .section-bg { position: relative; }
+    .section-bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0.12;
+      pointer-events: none;
+    }
+    .section-bg-1::before { background-image: url('img/bg-img.jpeg'); }
+    .section-bg-2::before {
+      /* Add a light gradient at the top to hide text in the background image */
+      background-image:
+        linear-gradient(to bottom,
+          rgba(248,250,252,1) 0%,
+          rgba(248,250,252,0.95) 20%,
+          rgba(248,250,252,0.75) 35%,
+          rgba(248,250,252,0.0) 55%),
+        url('img/img2.jpeg');
+    }
+    .section-bg-3::before { background-image: url('img/img3.jpeg'); }
+    .section-bg-4::before { background-image: url('img/img1.jpeg'); }
+    .section-bg > .container { position: relative; z-index: 1; }
+    .section-title { font-size: clamp(28px, 4vw, 36px); font-weight: 500; color: #000000; margin: 0 0 24px; font-family: Poppins, Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    .lead { font-size: clamp(18px, 2.2vw, 22px); color: var(--muted); }
+
+    .hero-bg { position: relative; width: 100%; min-height: 100vh; padding-bottom: 0; }
+    #home.hero-bg { border-bottom: none; }
+    .hero-bg::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('img/bg-img.jpeg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .hero-bg > .container { position: relative; z-index: 1; }
+
+    .hero { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 24px; align-items: stretch; }
+    .hero h1 { font-size: clamp(44px, 6vw, 68px); margin: 0 0 12px; font-family: Poppins, Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    .hero p { max-width: 72ch; }
+    .hero-visual {
+      position: relative;
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      /* semi-transparent gradient so bg image shows through */
+      background:
+        radial-gradient(900px 300px at 20% 0%, rgba(37,99,235,0.30), transparent 45%),
+        radial-gradient(700px 250px at 80% 10%, rgba(251,113,133,0.30), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,0.25), rgba(255,255,255,0.25));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .event-card {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 12px 24px rgba(2,6,23,0.08);
+    }
+    .event-heading { font-family: Poppins, Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-weight: 500; color: var(--primary); margin-bottom: 10px; font-size: 20px; }
+    .event-item { display: grid; grid-template-columns: 110px 1fr; gap: 8px; align-items: start; margin: 6px 0; }
+    .event-label { color: var(--muted); font-weight: 600; }
+    .event-value { color: var(--text); }
+
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: 0 12px 24px rgba(2,6,23,0.06); }
+
+    .tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+    .tab { padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border); color: var(--muted); background: #ffffff; cursor: pointer; font-size: 18px; }
+    .tab.active { color: var(--text); border-color: var(--accent); }
+    .tab-panels > .panel { display: none; }
+    .tab-panels > .panel.active { display: block; }
+
+    .dev-carousel { position: relative; overflow: hidden; border-radius: 16px; border: 1px solid var(--border); background: #ffffff; }
+
+    /* hero responsiveness */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .hero-visual {
+        margin-top: 8px;
+      }
+      .event-card {
+        max-width: 100%;
+      }
+    }
+    .dev-track { display: flex; transition: transform 0.4s ease; }
+
+    /* float image to the right so text wraps and can continue below the image */
+    .dev-slide {
+      min-width: 100%;
+      padding: 28px;
+      display: block;
+    }
+    .dev-slide-image {
+      float: right;
+      width: 36%;
+      margin-left: 24px;
+      margin-bottom: 14px;
+      display: block;
+      max-width: 420px;
+    }
+    .dev-slide-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+    .dev-slide-content {
+      color: var(--muted);
+      line-height: 1.85;
+    }
+    .dev-slide::after { content: ""; display: block; clear: both; }
+
+    .dev-slide h3 { margin: 0 0 10px; font-size: clamp(24px, 3.5vw, 30px); color: var(--primary); font-family: Poppins, Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-weight: 500; }
+    .dev-slide p { margin: 0 0 12px 0; color: var(--muted); white-space: pre-line; }
+    .dev-controls { position: absolute; inset: 0; pointer-events: none; }
+    .dev-arrow { pointer-events: auto; position: absolute; top: 50%; transform: translateY(-50%); background: #ffffff; border: 1px solid var(--border); color: var(--text); width: 40px; height: 40px; border-radius: 999px; display: grid; place-items: center; }
+    .dev-arrow.left { left: 12px; }
+    .dev-arrow.right { right: 12px; }
+    .dev-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
+    .dev-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--border); }
+    .dev-dot.active { background: var(--primary); }
+
+    .sectors-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+    @media (max-width: 1000px) { .sectors-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 600px) { .sectors-grid { grid-template-columns: repeat(2, 1fr); } }
+    .sector-card { border: 1px solid var(--border); background: #ffffff; border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 10px; transition: transform 0.18s ease, border-color 0.18s ease; color: var(--text); box-shadow: 0 10px 20px rgba(2,6,23,0.05); }
+    .sector-card:hover { transform: translateY(-2px); border-color: var(--primary); }
+    .sector-card h4 { margin: 0; font-size: 18px; font-family: Poppins, Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    .sector-card .go { color: var(--primary); font-size: 13px; }
+
+    .contact { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 900px) { .contact { grid-template-columns: 1fr; } }
+    .form { display: grid; gap: 12px; }
+    .input, .textarea { width: 100%; padding: 14px 16px; border: 1px solid var(--border); background: #ffffff; color: var(--text); border-radius: 10px; font-size: 18px; }
+    .input:focus, .textarea:focus { outline: 3px solid rgba(37,99,235,0.25); border-color: var(--primary); }
+    .textarea { min-height: 140px; resize: vertical; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 20px; border-radius: 14px; border: 1px solid var(--primary); color: #ffffff; background: var(--primary); cursor: pointer; box-shadow: 0 10px 20px rgba(37,99,235,0.15); font-size: 18px; }
+    .btn:hover { filter: brightness(1.05); }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      width: 100%;
+      margin: 0 auto 24px;
+      max-width: 1040px;
+    }
+    @media (max-width: 700px) {
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
+    }
+    .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px; display: flex; align-items: center; gap: 14px; box-shadow: 0 10px 24px rgba(2,6,23,0.06); }
+    .stat-icon { width: 44px; height: 44px; border-radius: 999px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; display: grid; place-items: center; font-weight: 700; box-shadow: 0 6px 12px rgba(37,99,235,0.18); }
+    .stat-title { font-weight: 700; font-size: 20px; }
+    .stat-sub { font-size: 14px; color: var(--muted); }
+
+    .dev-highlights { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 24px; }
+    @media (max-width: 1000px) { .dev-highlights { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .dev-highlights { grid-template-columns: 1fr; } }
+    .highlight-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: 0 10px 20px rgba(2,6,23,0.05); }
+    .highlight-card h4 { margin: 0 0 6px; color: var(--secondary); }
+    .highlight-card p { margin: 0; color: var(--muted); }
+    .highlight-card-image { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; }
+
+    footer {
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 20px 0;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-links {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .scroll-top { position: fixed; right: 16px; bottom: 16px; background: var(--primary); color: #fff; border: none; border-radius: 999px; width: 44px; height: 44px; display: none; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(37,99,235,0.25); }
+
+    /* responsive tweaks */
+    @media (max-width: 1100px) { .dev-slide-image { width: 40%; } }
+    @media (max-width: 900px) {
+      .dev-slide-image { float: none; width: 100%; margin: 0 0 14px 0; max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <img src="img/logo.jpeg" alt="Hapur Development" class="brand-logo" onclick="openImageModal(this.src)" style="cursor: pointer;">
+        <span>HPDA</span>
+        <img src="img/head-img.jpeg" alt="Head Image" style="height: 48px; display: block; margin-left: 10px; cursor: pointer;" onclick="openImageModal(this.src)">
+      </div>
+
+      <button class="menu-btn" id="menuBtn">Menu</button>
+      <nav class="nav-links" id="navLinks">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#development">Development</a>
+        <a href="#sectors">Sectors</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero-bg">
+      <div class="container hero">
+        <div>
+          <h1>HPDA</h1>
+          <p class="lead">The Hapur Pilkhuwa Development Authority (HPDA) is honoured to announce the prestigious “Invest In Hapur” Summit-2025.</p>
+          <div style="margin-top:16px; display:flex; gap:12px;">
+            <a class="btn" href="#development">Explore Development</a>
+            <a class="btn" style="background:#ffffff;color:var(--primary);border-color:var(--primary);" href="#sectors">View Sectors</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="event-card">
+            <div class="event-heading">Event Details</div>
+            <div class="event-item"><div class="event-label">Event</div><div class="event-value">“Invest In Hapur” Summit - 2025</div></div>
+            <div class="event-item"><div class="event-label">Date</div><div class="event-value">Friday, December 12, 2025</div></div>
+            <div class="event-item"><div class="event-label">Venue</div><div class="event-value">H Block, Anand Vihar Scheme Hapur</div></div>
+            <div class="event-item"><div class="event-label">Time</div><div class="event-value">12 Noon to 2PM</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats summary section hidden for now
+    <section class="section-compact">
+      <div class="container">
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-icon">✓</div><div><div class="stat-title">274 Projects</div><div class="stat-sub">₹810 Cr investment</div></div></div>
+          <div class="stat-card"><div class="stat-icon">↯</div><div><div class="stat-title">NH-9 Upgrade</div><div class="stat-sub">6-lane access</div></div></div>
+          <div class="stat-card"><div class="stat-icon">⚡</div><div><div class="stat-title">DME Phase 3</div><div class="stat-sub">Under 1 hour to Delhi</div></div></div>
+          <div class="stat-card"><div class="stat-icon">🏗</div><div><div class="stat-title">Industrial Cluster</div><div class="stat-sub">UPEIDA development</div></div></div>
+        </div>
+      </div>
+    </section>
+    -->
+
+    <section id="about" class="section-bg section-bg-1">
+      <div class="container">
+        <h2 class="section-title">About the Event</h2>
+        <div class="card">
+          <div class="panel" id="about-event" role="tabpanel">
+            <p class="lead">Honourable Minister of Finance and Parliamentary Affairs for the Government of Uttar Pradesh, Shri Suresh Kumar Khanna, will grace the occasion as chief guest. 
+The Government of Uttar Pradesh is committed to its vision of industrial acceleration, and the HPDA region, serving as a strategic gateway to the National Capital Region (NCR), is positioned as a key economic hub. 
+This Summit is curated to provide a comprehensive overview of the vast, untapped investment potential across critical sectors, including logistics, manufacturing, residential, and IT/ITES, within HPDA's jurisdiction.  
+The event will serve as a premier platform for direct engagement with government leadership, offering detailed insights into attractive policy incentives, simplified regulatory processes, and readily available infrastructure for rapid business setup.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reason to invest-->
+    <section id="reason-to-invest" class="section-compact">
+      <div class="container">
+        <h3 class="section-title">Reason to invest</h3>
+        <div class="dev-highlights">
+          <div class="highlight-card">
+            <img src="img/i4.jpeg" alt="Connectivity" class="highlight-card-image" onclick="openImageModal(this.src)">
+            <h4>Connectivity</h4>
+            <p>Expressways and highways enhance access for citizens and commerce.</p>
+          </div>
+          <div class="highlight-card">
+            <img src="img/i1.jpeg" alt="Industry" class="highlight-card-image" onclick="openImageModal(this.src)">
+            <h4>Industry</h4>
+            <p>Clusters and parks support manufacturing growth and jobs.</p>
+          </div>
+          <div class="highlight-card">
+            <img src="img/i2.jpeg" alt="Urban Services" class="highlight-card-image" onclick="openImageModal(this.src)">
+            <h4>Urban Services</h4>
+            <p>Drainage, lighting, and utilities upgraded for resilience.</p>
+          </div>
+          <div class="highlight-card">
+            <img src="img/i3.jpeg" alt="Housing" class="highlight-card-image" onclick="openImageModal(this.src)">
+            <h4>Housing</h4>
+            <p>Planned schemes expand quality living and amenities.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="development" class="section-bg section-bg-2">
+      <div class="container">
+        <h2 class="section-title">Development and Achievements of Hapur in recent years</h2>
+        <div class="dev-carousel" id="devCarousel">
+          <div class="dev-track">
+            <div class="dev-slide">
+              <div class="dev-slide-image">
+                <img src="img/img2.jpeg" alt="Infrastructure and Connectivity Overhaul" onclick="openImageModal(this.src)" style="cursor: pointer;">
+              </div>
+              <div class="dev-slide-content">
+                <h3>Infrastructure and Connectivity Overhaul</h3>
+                <p>A key focus has been the massive improvement in regional connectivity:</p>
+                <ul>
+                  <li>National Highway 9 (NH-9) Expansion: The critical Hapur – Moradabad section of the highway (formerly NH-24) was upgraded to a 6-lane access-controlled highway. This significantly reduced travel time and improved logistical efficiency between Delhi-NCR and Eastern UP/Uttarakhand.</li>
+                  <li>Delhi Meerut Expressway: The expressway includes a dedicated 22 km stretch from Dasna to Hapur (Phase 3), making Hapur directly connected to Delhi and NCR through a high-speed, signal-free route. This has drastically reduced travel time between Hapur and Delhi from 2–3 hours to under 1 hour. The construction of the overbridge at Pilkuwa has eliminated frequent traffic jam.</li>
+                  <li>Targeted Investment: In late 2022, the state government inaugurated 274 development projects valued at approximately ₹810 crore, primarily targeting the improvement of roads, drainage, and basic utilities across the district.</li>
+                  <li>Ganga Expressway Impact: Hapur is strategically placed to benefit from the new Ganga Expressway (Meerut to Prayagraj), which is set to unlock significant land for industrial and logistics growth in areas like the Garhmukteshwar Tehsil.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="dev-slide">
+              <div class="dev-slide-image">
+                <img src="img/img3.jpeg" alt="Economic and Industrial Growth" onclick="openImageModal(this.src)" style="cursor: pointer;">
+              </div>
+              <div class="dev-slide-content">
+                <h3>Economic and Industrial Growth</h3>
+                <p>Hapur's role as a major manufacturing hub has been reinforced:</p>
+                <ul>
+                  <li>Industrial Corridor Development: The Uttar Pradesh Expressways Industrial Development Authority (UPEIDA) is actively developing an Integrated Logistics and Manufacturing Cluster near Bahadurpur (Garhmukteshwar) along the upcoming Ganga Expressway, involving substantial land acquisition for new industries.</li>
+                  <li>Sectoral Performance: The district recorded a strong overall economic growth rate, with the secondary (industrial) sector increasing its share, reflecting growth in manufacturing. The primary (agriculture) sector also showed robust annual growth of 30.47%.</li>
+                  <li>Support for Local Industries: Hapur continues to be known for Stainless Steel Pipes & Tubes and the handloom/powerloom industry of Pilkhuwa (home furnishings). These industries have received focused state support under the One District One Product (ODOP) scheme.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="dev-slide">
+              <div class="dev-slide-image">
+                <img src="img/img1.jpeg" alt="Urban Planning and Civic Infrastructure" onclick="openImageModal(this.src)" style="cursor: pointer;">
+              </div>
+              <div class="dev-slide-content">
+                <h3>Urban Planning and Civic Infrastructure</h3>
+                <p>The Hapur-Pilkhuwa Development Authority (HPDA) has been instrumental in planned urban expansion:</p>
+                <ul>
+                  <li>Master Plan 2031: The HPDA is actively implementing the Hapur Master Plan 2031, which provides the framework for regulated urban expansion, land-use control, and infrastructure development to manage population growth. HPDA has significantly contributed to the region's infrastructure transformation through projects focusing on road construction, STPs, drainage, community centres, street lighting, market spaces, and basic service hubs.</li>
+                  <li>Planned Housing: New housing and commercial projects like Anand Vihar and Preet Vihar have been developed to accommodate the increasing urban population. Recent works include tenders for a Convention Centre and ongoing maintenance of these urban schemes.</li>
+                  <li>Upgraded Municipal Services: Funds from the 15th Finance Commission have been directed towards critical municipal works, including the repair of roads and sewers, and investment in modern equipment for Solid Waste Management and potentially new Water Treatment Plants (WTP).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="dev-controls">
+            <button class="dev-arrow left" aria-label="Previous">◀</button>
+            <button class="dev-arrow right" aria-label="Next">▶</button>
+            <div class="dev-dots"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sectors" class="section-bg section-bg-3">
+      <div class="container">
+        <h2 class="section-title">Sectors</h2>
+        <div class="sectors-grid">
+          <a class="sector-card" href="sector-agriculture.html" style="background: linear-gradient(135deg, #dcfce7, #fef9c3);">
+            <h4>Residential</h4>
+            <span class="go" style="color:#22c55e">Open</span>
+          </a>
+          <a class="sector-card" href="sector-education.html" style="background: linear-gradient(135deg, #dbeafe, #ede9fe);">
+            <h4>Healthcare</h4>
+            <span class="go" style="color:#3b82f6">Open</span>
+          </a>
+          <a class="sector-card" href="sector-healthcare.html" style="background: linear-gradient(135deg, #ffe4e6, #fee2e2);">
+            <h4>Education</h4>
+            <span class="go" style="color:#ef4444">Open</span>
+          </a>
+          <a class="sector-card" href="sector-infrastructure.html" style="background: linear-gradient(135deg, #ffedd5, #fef3c7);">
+            <h4>Hotels</h4>
+            <span class="go" style="color:#f59e0b">Open</span>
+          </a>
+          <a class="sector-card" href="sector-industry.html" style="background: linear-gradient(135deg, #e0e7ff, #cffafe);">
+            <h4>Industrial</h4>
+            <span class="go" style="color:#6366f1">Open</span>
+          </a>
+          <a class="sector-card" href="sector-tourism.html" style="background: linear-gradient(135deg, #ccfbf1, #ecfccb);">
+            <h4>Panel Discussion</h4>
+            <span class="go" style="color:#14b8a6">Open</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section-bg section-bg-4">
+      <div class="container contact">
+        <div class="card">
+          <h2 class="section-title" style="margin-bottom:12px;">Contact Us</h2>
+          <p class="lead">Reach out for collaborations, proposals, or general inquiries.</p>
+        </div>
+        <form class="card form" action="mailto:info@example.com" method="post" enctype="text/plain">
+          <input class="input" type="text" name="name" placeholder="Your Name" required />
+          <input class="input" type="email" name="email" placeholder="Your Email" required />
+          <input class="input" type="text" name="phone" placeholder="Phone" />
+          <input class="input" type="text" name="subject" placeholder="Subject" />
+          <textarea class="textarea" name="message" placeholder="Your Message" required></textarea>
+          <button class="btn" type="submit">Send Message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Image Modal -->
+  <div id="imageModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); cursor: pointer;">
+    <img id="modalImage" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 90%; max-height: 90%; object-fit: contain;">
+  </div>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>© 2025 Hapur Development</div>
+      <div class="footer-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#development">Development</a>
+        <a href="#sectors">Sectors</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', () => { navLinks.classList.toggle('open'); });
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { navLinks.classList.remove('open'); }));
+
+    const aboutTabs = document.querySelectorAll('.tab');
+    const panels = document.querySelectorAll('.panel');
+    aboutTabs.forEach(tab => tab.addEventListener('click', () => {
+      aboutTabs.forEach(t => t.classList.remove('active')); tab.classList.add('active');
+      panels.forEach(p => p.classList.remove('active')); document.getElementById(tab.dataset.tab).classList.add('active');
+    }));
+
+    const carousel = document.getElementById('devCarousel');
+    const track = carousel.querySelector('.dev-track');
+    const slides = Array.from(carousel.querySelectorAll('.dev-slide'));
+    const left = carousel.querySelector('.dev-arrow.left');
+    const right = carousel.querySelector('.dev-arrow.right');
+    const dotsWrap = carousel.querySelector('.dev-dots');
+    let index = 0;
+    const setIndex = (i) => { index = (i + slides.length) % slides.length; track.style.transform = `translateX(-${index * 100}%)`; renderDots(); };
+    const renderDots = () => { dotsWrap.innerHTML = ''; slides.forEach((_, i) => { const d = document.createElement('div'); d.className = 'dev-dot' + (i === index ? ' active' : ''); d.addEventListener('click', () => setIndex(i)); dotsWrap.appendChild(d); }); };
+    left.addEventListener('click', () => setIndex(index - 1));
+    right.addEventListener('click', () => setIndex(index + 1));
+    renderDots();
+
+    const header = document.querySelector('header');
+    const links = Array.from(document.querySelectorAll('.nav-links a'));
+    const ids = links.map(l => l.getAttribute('href'));
+    const sections = ids.map(id => document.querySelector(id));
+    const activate = (id) => { links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === id)); };
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) activate('#' + e.target.id); });
+    }, { rootMargin: '-40% 0px -50% 0px', threshold: 0.1 });
+    sections.forEach(s => io.observe(s));
+
+    links.forEach(l => l.addEventListener('click', (e) => {
+      e.preventDefault(); const target = document.querySelector(l.getAttribute('href'));
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }));
+    const scrollTopBtn = document.createElement('button');
+    scrollTopBtn.className = 'scroll-top';
+    scrollTopBtn.textContent = '↑';
+    document.body.appendChild(scrollTopBtn);
+    const toggleScrollBtn = () => { scrollTopBtn.style.display = window.scrollY > 400 ? 'flex' : 'none'; };
+    window.addEventListener('scroll', toggleScrollBtn);
+    scrollTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    toggleScrollBtn();
+
+    // Image Modal functionality
+    function openImageModal(src) {
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImage');
+      modal.style.display = 'block';
+      modalImg.src = src;
+    }
+
+    document.getElementById('imageModal').addEventListener('click', function() {
+      this.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
