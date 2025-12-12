@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Hapur Development | HDPA</title>
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600&family=Poppins:wght@500;700&family=Merriweather:wght@300;400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root { --bg: #f8fafc; --card: #ffffff; --text: #0f172a; --muted: #334155; --primary: #2563eb; --secondary: #fb7185; --accent: #10b981; --accent-2: #6366f1; --border: #e2e8f0; }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body { margin: 0; font-family: "Raleway", sans-serif; background: radial-gradient(1200px 500px at 15% -10%, #ffe4e6, transparent 40%), radial-gradient(900px 400px at 85% 0%, #e0f2fe, transparent 50%), linear-gradient(180deg, #ffffff, #f8fafc 40%, #ffffff); color: var(--text); font-size: 18px; line-height: 1.75; }
+    body { margin: 0; font-family: "Merriweather", serif; background: radial-gradient(1200px 500px at 15% -10%, #ffe4e6, transparent 40%), radial-gradient(900px 400px at 85% 0%, #e0f2fe, transparent 50%), linear-gradient(180deg, #ffffff, #f8fafc 40%, #ffffff); color: var(--text); font-size: 18px; line-height: 1.75; }
     p { font-size: 18px; line-height: 1.85; }
     a { color: inherit; text-decoration: none; }
 
@@ -63,7 +63,7 @@
     .section-bg-3::before { background-image: url('img/img3.jpeg'); }
     .section-bg-4::before { background-image: url('img/img1.jpeg'); }
     .section-bg > .container { position: relative; z-index: 1; }
-    .section-title { font-size: clamp(28px, 4vw, 36px); font-weight: 500; color: #000000; margin: 0 0 24px; font-family: Poppins, Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    .section-title { font-size: clamp(28px, 4vw, 36px); font-weight: 700; color: #000000; margin: 0 0 24px; font-family: "Playfair Display", serif; }
     .lead { font-size: clamp(18px, 2.2vw, 22px); color: var(--muted); }
 
     .hero-bg { position: relative; width: 100%; min-height: 100vh; padding-bottom: 0; }
@@ -85,7 +85,7 @@
     .hero-bg > .container { position: relative; z-index: 1; }
 
     .hero { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 24px; align-items: stretch; }
-    .hero h1 { font-size: clamp(32px, 4.5vw, 48px); margin: 0 0 12px; font-family: Poppins, Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    .hero h1 { font-size: clamp(32px, 4.5vw, 48px); margin: 0 0 12px; font-family: "Playfair Display", serif; font-weight: 700; }
     .hero p { max-width: 72ch; }
     .hero-visual {
       position: relative;
@@ -169,7 +169,7 @@
     }
     .dev-slide::after { content: ""; display: block; clear: both; }
 
-    .dev-slide h3 { margin: 0 0 10px; font-size: clamp(24px, 3.5vw, 30px); color: var(--primary); font-family: Poppins, Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-weight: 500; }
+    .dev-slide h3 { margin: 0 0 10px; font-size: clamp(24px, 3.5vw, 30px); color: var(--primary); font-family: "Playfair Display", serif; font-weight: 700; }
     .dev-slide p { margin: 0 0 12px 0; color: var(--muted); white-space: pre-line; }
     .dev-controls { position: absolute; inset: 0; pointer-events: none; }
     .dev-arrow { pointer-events: auto; position: absolute; top: 50%; transform: translateY(-50%); background: #ffffff; border: 1px solid var(--border); color: var(--text); width: 40px; height: 40px; border-radius: 999px; display: grid; place-items: center; }
@@ -184,7 +184,7 @@
     @media (max-width: 600px) { .sectors-grid { grid-template-columns: repeat(2, 1fr); } }
     .sector-card { border: 1px solid var(--border); background: #ffffff; border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 10px; transition: transform 0.18s ease, border-color 0.18s ease; color: var(--text); box-shadow: 0 10px 20px rgba(2,6,23,0.05); }
     .sector-card:hover { transform: translateY(-2px); border-color: var(--primary); }
-    .sector-card h4 { margin: 0; font-size: 18px; font-family: Poppins, Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    .sector-card h4 { margin: 0; font-size: 18px; font-family: "Playfair Display", serif; font-weight: 700; }
     .sector-card .go { color: var(--primary); font-size: 13px; }
 
     .contact { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -436,10 +436,12 @@ The event will serve as a premier platform for direct engagement with government
             <h4>Industrial</h4>
             <span class="go" style="color:#6366f1">Open</span>
           </a>
+          <!-- Tourism sector removed - DO NOT USE
           <a class="sector-card" href="sector-tourism.html" style="background: linear-gradient(135deg, #ccfbf1, #ecfccb);">
             <h4>Architects</h4>
             <span class="go" style="color:#14b8a6">Open</span>
           </a>
+          -->
         </div>
       </div>
     </section>
